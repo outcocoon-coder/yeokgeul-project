@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>역글(易글) 양손 5열 완성형 키보드</title>
+<style>
+:root{
+  --bg:#f5f3ec;--panel:#fff;--text:#202421;--muted:#717772;--line:#d8dad5;
+  --accent:#36594a;--soft:#e8efe9;--con:#ece9df;--vow:#e6efe8;
+  --con2:#ddd7c7;--vow2:#d6e5d9;--danger:#8a4343;--shadow:0 10px 26px rgba(0,0,0,.07)
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif}
+body{min-height:100dvh}
+.app{max-width:900px;margin:auto;padding:8px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+header{padding:14px;margin-bottom:8px}
+h1{font-size:1.23rem;margin:0 0 5px}
+.sub{font-size:.82rem;color:var(--muted);line-height:1.45}
+.io{padding:10px;margin-bottom:8px}
+label{display:block;font-size:.75rem;color:var(--muted);font-weight:850;margin-bottom:5px}
+textarea{width:100%;min-height:82px;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:1rem;line-height:1.55;resize:vertical}
+#yeok{font-size:1.16rem}
+.swap{text-align:center;font-weight:900;color:var(--accent);padding:2px}
+.status{margin-top:7px;background:var(--soft);padding:8px 10px;border-radius:10px;font-size:.77rem;color:#355044}
+.kbd{padding:9px;margin-bottom:8px}
+.legend{display:grid;grid-template-columns:3fr 2fr;gap:6px;margin-bottom:6px}
+.legend div{padding:6px 8px;border-radius:9px;text-align:center;font-size:.72rem;font-weight:900}
+.legend .l{background:#eeeae0}.legend .r{background:#e5efe7}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.key{
+  min-height:56px;border:0;border-radius:11px;font-weight:900;touch-action:manipulation;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.08)
+}
+.key.con{background:var(--con)}
+.key.vow{background:var(--vow)}
+.key.con:active{background:var(--con2);transform:translateY(1px)}
+.key.vow:active{background:var(--vow2);transform:translateY(1px)}
+.key .big{display:block;font-size:1.18rem;line-height:1.05}
+.key .small{display:block;font-size:.58rem;color:var(--muted);margin-top:3px}
+.actions{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-top:7px}
+.action{min-height:42px;border:1px solid var(--line);border-radius:10px;background:#fff;font-weight:850;font-size:.8rem}
+.action.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.action.danger{color:var(--danger)}
+.preview{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}
+.pbox{border:1px solid var(--line);border-radius:10px;padding:8px;background:#faf9f6}
+.pbox .cap{font-size:.66rem;color:var(--muted);font-weight:800}
+.pbox .val{font-size:1rem;font-weight:900;margin-top:3px}
+details{padding:11px}
+summary{font-weight:900;cursor:pointer}
+.note{font-size:.75rem;color:var(--muted);line-height:1.5;margin-top:6px}
+@media(max-width:600px){
+  .app{padding:5px}
+  .key{min-height:52px}
+  .key .big{font-size:1.08rem}
+  .actions{grid-template-columns:repeat(3,1fr)}
+  textarea{min-height:76px}
+}
+</style>
+</head>
+<body>
+<main class="app">
+<header class="card">
+  <h1>역글(易글) 양손 5열 완성형 키보드</h1>
+  <div class="sub">
+    왼쪽 3열은 <b>자음</b>, 오른쪽 2열은 <b>모음</b>으로 고정했습니다.
+    왼손 엄지로 자음, 오른손 엄지로 모음을 번갈아 누르는 흐름을 목표로 합니다.
+  </div>
+</header>
+
+<section class="io card">
+  <label>한글</label>
+  <textarea id="hangul">나는 오늘을 산다.</textarea>
+  <div class="swap">⇅</div>
+  <label>역글</label>
+  <textarea id="yeok" placeholder="아래 5열 키보드로 직접 입력"></textarea>
+  <div id="status" class="status">한글↔역글 자동 변환</div>
+</section>
+
+<section class="kbd card">
+  <div class="legend">
+    <div class="l">자음(초성/종성)</div>
+    <div class="r">모음(중성)</div>
+  </div>
+
+  <div class="grid">
+    <!-- row 1 -->
+    <button class="key con" data-insert="☰"><span class="big">☰</span><span class="small">ㄱ</span></button>
+    <button class="key con" data-insert="☱"><span class="big">☱</span><span class="small">ㄴ</span></button>
+    <button class="key con" data-insert="☲"><span class="big">☲</span><span class="small">ㄷ</span></button>
+    <button class="key vow" data-insert="┃•"><span class="big">┃•</span><span class="small">ㅏ</span></button>
+    <button class="key vow" data-insert="•┃"><span class="big">•┃</span><span class="small">ㅓ</span></button>
+
+    <!-- row 2 -->
+    <button class="key con" data-insert="☳"><span class="big">☳</span><span class="small">ㄹ</span></button>
+    <button class="key con" data-insert="☴"><span class="big">☴</span><span class="small">ㅁ</span></button>
+    <button class="key con" data-insert="☵"><span class="big">☵</span><span class="small">ㅂ</span></button>
+    <button class="key vow" data-insert="━•"><span class="big">━•</span><span class="small">ㅗ</span></button>
+    <button class="key vow" data-insert="•━"><span class="big">•━</span><span class="small">ㅜ</span></button>
+
+    <!-- row 3 -->
+    <button class="key con" data-insert="☶"><span class="big">☶</span><span class="small">ㅅ</span></button>
+    <button class="key con" data-insert="☷"><span class="big">☷</span><span class="small">ㅇ</span></button>
+    <button class="key con" data-insert="☷+"><span class="big">☷+</span><span class="small">ㅎ</span></button>
+    <button class="key vow" data-insert="━"><span class="big">━</span><span class="small">ㅡ</span></button>
+    <button class="key vow" data-insert="┃"><span class="big">┃</span><span class="small">ㅣ</span></button>
+
+    <!-- row 4 -->
+    <button class="key con" data-insert="☶-"><span class="big">☶-</span><span class="small">ㅈ</span></button>
+    <button class="key con" data-insert="☶+"><span class="big">☶+</span><span class="small">ㅊ</span></button>
+    <button class="key con" data-insert="☰+"><span class="big">☰+</span><span class="small">ㅋ</span></button>
+    <button class="key vow" data-insert="┃••"><span class="big">┃••</span><span class="small">ㅑ</span></button>
+    <button class="key vow" data-insert="••┃"><span class="big">••┃</span><span class="small">ㅕ</span></button>
+
+    <!-- row 5 -->
+    <button class="key con" data-insert="☲+"><span class="big">☲+</span><span class="small">ㅌ</span></button>
+    <button class="key con" data-insert="☵+"><span class="big">☵+</span><span class="small">ㅍ</span></button>
+    <button class="key con" data-insert="☶°"><span class="big">☶°</span><span class="small">ㅆ</span></button>
+    <button class="key vow" data-insert="━••"><span class="big">━••</span><span class="small">ㅛ</span></button>
+    <button class="key vow" data-insert="••━"><span class="big">••━</span><span class="small">ㅠ</span></button>
+
+    <!-- row 6 -->
+    <button class="key con" data-insert="☰°"><span class="big">☰°</span><span class="small">ㄲ</span></button>
+    <button class="key con" data-insert="☲°"><span class="big">☲°</span><span class="small">ㄸ</span></button>
+    <button class="key con" data-insert="☵°"><span class="big">☵°</span><span class="small">ㅃ</span></button>
+    <button class="key vow" data-insert="┃•┃"><span class="big">┃•┃</span><span class="small">ㅐ</span></button>
+    <button class="key vow" data-insert="•┃┃"><span class="big">•┃┃</span><span class="small">ㅔ</span></button>
+
+    <!-- row 7 -->
+    <button class="key con" data-insert="☶-°"><span class="big">☶-°</span><span class="small">ㅉ</span></button>
+    <button class="key con" data-insert="·"><span class="big">·</span><span class="small">구분</span></button>
+    <button class="key con" data-insert=" "><span class="big">␠</span><span class="small">띄어쓰기</span></button>
+    <button class="key vow" data-insert="┃••┃"><span class="big">┃••┃</span><span class="small">ㅒ</span></button>
+    <button class="key vow" data-insert="••┃┃"><span class="big">••┃┃</span><span class="small">ㅖ</span></button>
+
+    <!-- row 8 -->
+    <button class="key con" data-insert="."><span class="big">.</span><span class="small">마침표</span></button>
+    <button class="key con" data-insert=","><span class="big">,</span><span class="small">쉼표</span></button>
+    <button class="key con" data-insert="\n"><span class="big">↵</span><span class="small">줄바꿈</span></button>
+    <button class="key vow" data-insert="━•┃"><span class="big">━•┃</span><span class="small">ㅚ</span></button>
+    <button class="key vow" data-insert="•━┃"><span class="big">•━┃</span><span class="small">ㅟ</span></button>
+
+    <!-- row 9 -->
+    <button class="key con" data-insert="☵☶"><span class="big">☵☶</span><span class="small">ㅄ</span></button>
+    <button class="key con" data-insert="☳☰"><span class="big">☳☰</span><span class="small">ㄺ</span></button>
+    <button class="key con" data-insert="☳☴"><span class="big">☳☴</span><span class="small">ㄻ</span></button>
+    <button class="key vow" data-insert="━┃"><span class="big">━┃</span><span class="small">ㅢ</span></button>
+    <button class="key vow" data-insert="━•┃•"><span class="big">━•┃•</span><span class="small">ㅘ</span></button>
+
+    <!-- row 10 -->
+    <button class="key con" data-insert="☳☵"><span class="big">☳☵</span><span class="small">ㄼ</span></button>
+    <button class="key con" data-insert="☱☶-"><span class="big">☱☶-</span><span class="small">ㄵ</span></button>
+    <button class="key con" data-insert="☱☷+"><span class="big">☱☷+</span><span class="small">ㄶ</span></button>
+    <button class="key vow" data-insert="•━•┃"><span class="big">•━•┃</span><span class="small">ㅝ</span></button>
+    <button class="key vow" data-insert="━•┃•┃"><span class="big">━•┃•┃</span><span class="small">ㅙ</span></button>
+
+    <!-- row 11 -->
+    <button class="key con" data-insert="☰☶"><span class="big">☰☶</span><span class="small">ㄳ</span></button>
+    <button class="key con" data-insert="☳☶"><span class="big">☳☶</span><span class="small">ㄽ</span></button>
+    <button class="key con" data-insert="☳☷+"><span class="big">☳☷+</span><span class="small">ㅀ</span></button>
+    <button class="key vow" data-insert="•━•┃┃"><span class="big">•━•┃┃</span><span class="small">ㅞ</span></button>
+    <button class="key vow" data-insert="━•┃•"><span class="big">━•┃•</span><span class="small">ㅘ</span></button>
+  </div>
+
+  <div class="actions">
+    <button id="back" class="action danger">⌫ 삭제</button>
+    <button id="copyY" class="action primary">역글 복사</button>
+    <button id="copyH" class="action">한글 복사</button>
+    <button id="clear" class="action danger">전체 지우기</button>
+    <button id="sample" class="action">예문</button>
+    <button id="sep" class="action">· 구분</button>
+  </div>
+
+  <div class="preview">
+    <div class="pbox"><div class="cap">마지막 입력</div><div id="last" class="val">—</div></div>
+    <div class="pbox"><div class="cap">현재 해석</div><div id="decoded" class="val">—</div></div>
+  </div>
+</section>
+
+<section class="card">
+<details open>
+<summary>입력 설계</summary>
+<div class="note">
+기본 원칙은 <b>왼손 자음 → 오른손 모음 → 필요하면 왼손 받침</b>입니다.
+예를 들어 <code>☶</code>(ㅅ) → <code>┃•</code>(ㅏ) → <code>☱</code>(ㄴ) 순서로 누르면 역글 <b>☶┃•☱</b>, 한글 <b>산</b>이 됩니다.
+</div>
+<div class="note">
+자음과 모음이 같은 행에 있어도 역할이 좌우로 고정되어 있으므로, 탭이나 입력모드 전환이 필요 없습니다.
+</div>
+</details>
+</section>
+</main>
+
+<script>
+(() => {
+const $=s=>document.querySelector(s);
+const hangul=$("#hangul"),yeok=$("#yeok"),status=$("#status"),last=$("#last"),decoded=$("#decoded");
+let lock=false;
+let sampleActive=true;
+
+function clearInitialSampleFor(target){
+  if(!sampleActive) return;
+  sampleActive=false;
+  lock=true;
+  hangul.value="";
+  yeok.value="";
+  lock=false;
+  last.textContent="—";
+  decoded.textContent="—";
+  status.textContent="새 문장을 입력하세요.";
+  target.value="";
+}
+
+const L=["ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ","ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+const V=["ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅗ","ㅘ","ㅙ","ㅚ","ㅛ","ㅜ","ㅝ","ㅞ","ㅟ","ㅠ","ㅡ","ㅢ","ㅣ"];
+const T=["","ㄱ","ㄲ","ㄳ","ㄴ","ㄵ","ㄶ","ㄷ","ㄹ","ㄺ","ㄻ","ㄼ","ㄽ","ㄾ","ㄿ","ㅀ","ㅁ","ㅂ","ㅄ","ㅅ","ㅆ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+
+const C={
+"ㄱ":"☰","ㄲ":"☰°","ㅋ":"☰+","ㄴ":"☱","ㄷ":"☲","ㄸ":"☲°","ㅌ":"☲+","ㄹ":"☳",
+"ㅁ":"☴","ㅂ":"☵","ㅃ":"☵°","ㅍ":"☵+","ㅅ":"☶","ㅆ":"☶°","ㅈ":"☶-","ㅉ":"☶-°","ㅊ":"☶+","ㅇ":"☷","ㅎ":"☷+",
+"ㄳ":"☰☶","ㄵ":"☱☶-","ㄶ":"☱☷+","ㄺ":"☳☰","ㄻ":"☳☴","ㄼ":"☳☵","ㄽ":"☳☶","ㄾ":"☳☲+","ㄿ":"☳☵+","ㅀ":"☳☷+","ㅄ":"☵☶"
+};
+const M={
+"ㅏ":"┃•","ㅐ":"┃•┃","ㅑ":"┃••","ㅒ":"┃••┃","ㅓ":"•┃","ㅔ":"•┃┃","ㅕ":"••┃","ㅖ":"••┃┃",
+"ㅗ":"━•","ㅘ":"━•┃•","ㅙ":"━•┃•┃","ㅚ":"━•┃","ㅛ":"━••","ㅜ":"•━","ㅝ":"•━•┃","ㅞ":"•━•┃┃","ㅟ":"•━┃","ㅠ":"••━",
+"ㅡ":"━","ㅢ":"━┃","ㅣ":"┃"
+};
+const CR=Object.fromEntries(Object.entries(C).map(([k,v])=>[v,k]));
+const MR=Object.fromEntries(Object.entries(M).map(([k,v])=>[v,k]));
+const initials=Object.keys(CR).filter(x=>L.includes(CR[x])).sort((a,b)=>b.length-a.length);
+const finals=Object.keys(CR).filter(x=>T.includes(CR[x])&&CR[x]).sort((a,b)=>b.length-a.length);
+const vowels=Object.keys(MR).sort((a,b)=>b.length-a.length);
+
+function decompose(ch){
+ const code=ch.charCodeAt(0);if(code<0xAC00||code>0xD7A3)return null;
+ const n=code-0xAC00;return{l:L[Math.floor(n/588)],v:V[Math.floor((n%588)/28)],t:T[n%28]};
+}
+function compose(l,v,t=""){
+ const li=L.indexOf(l),vi=V.indexOf(v),ti=T.indexOf(t);if(li<0||vi<0||ti<0)return null;
+ return String.fromCharCode(0xAC00+((li*21)+vi)*28+ti);
+}
+function h2y(text){
+ let out="";for(const ch of text){const d=decompose(ch);if(!d){out+=ch;continue;}out+=C[d.l]+M[d.v]+(d.t?C[d.t]:"");}return out;
+}
+function sw(text,pos,list){for(const c of list)if(text.startsWith(c,pos))return c;return null;}
+function shallow(text,pos){const i=sw(text,pos,initials);if(!i)return false;return !!sw(text,pos+i.length,vowels);}
+function parseSyl(text,pos){
+ const ic=sw(text,pos,initials);if(!ic)return null;const l=CR[ic];let p=pos+ic.length;
+ const vc=sw(text,p,vowels);if(!vc)return null;const v=MR[vc];p+=vc.length;
+ let best={char:compose(l,v),end:p};
+ for(const fc of finals){
+  if(!text.startsWith(fc,p))continue;const t=CR[fc],ch=compose(l,v,t);if(!ch)continue;const e=p+fc.length;
+  if(e>=text.length||/[\s.,!?;:'"()[\]{}·]/.test(text[e])||shallow(text,e)){best={char:ch,end:e};break;}
+ }
+ return best;
+}
+function y2h(text){
+ text=text.replaceAll("·","");let out="",i=0;
+ while(i<text.length){const p=parseSyl(text,i);if(p){out+=p.char;i=p.end;}else{out+=text[i];i++;}}return out;
+}
+function fromH(){if(lock)return;lock=true;yeok.value=h2y(hangul.value);decoded.textContent=hangul.value||"—";status.textContent="한글 → 역글 자동 변환";lock=false;}
+function fromY(){if(lock)return;lock=true;hangul.value=y2h(yeok.value);decoded.textContent=hangul.value||"—";status.textContent="역글 → 한글 자동 변환";lock=false;}
+function insert(text){
+ clearInitialSampleFor(yeok);
+ const s=yeok.selectionStart??yeok.value.length,e=yeok.selectionEnd??yeok.value.length;
+ yeok.value=yeok.value.slice(0,s)+text+yeok.value.slice(e);const p=s+text.length;yeok.setSelectionRange(p,p);yeok.focus();
+ last.textContent=text===" "?"띄어쓰기":text==="\\n"?"줄바꿈":text;fromY();
+}
+document.querySelectorAll("[data-insert]").forEach(b=>b.addEventListener("click",()=>insert(b.dataset.insert)));
+$("#sep").addEventListener("click",()=>insert("·"));
+$("#back").addEventListener("click",()=>{
+ const s=yeok.selectionStart??yeok.value.length,e=yeok.selectionEnd??yeok.value.length;
+ if(s!==e){yeok.value=yeok.value.slice(0,s)+yeok.value.slice(e);yeok.setSelectionRange(s,s);}
+ else if(s>0){const arr=[...yeok.value.slice(0,s)];arr.pop();const left=arr.join("");yeok.value=left+yeok.value.slice(s);yeok.setSelectionRange(left.length,left.length);}
+ yeok.focus();fromY();
+});
+async function copy(txt,label){
+ try{await navigator.clipboard.writeText(txt);status.textContent=label+" 복사 완료";}
+ catch{const t=document.createElement("textarea");t.value=txt;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove();status.textContent=label+" 복사 완료";}
+}
+$("#copyY").addEventListener("click",()=>copy(yeok.value,"역글"));
+$("#copyH").addEventListener("click",()=>copy(hangul.value,"한글"));
+$("#clear").addEventListener("click",()=>{lock=true;hangul.value="";yeok.value="";lock=false;last.textContent="—";decoded.textContent="—";status.textContent="모두 지웠습니다.";});
+$("#sample").addEventListener("click",()=>{hangul.value="나는 오늘을 산다.";fromH();});
+hangul.addEventListener("focus",()=>clearInitialSampleFor(hangul),{once:true});
+yeok.addEventListener("focus",()=>clearInitialSampleFor(yeok),{once:true});
+hangul.addEventListener("input",fromH);yeok.addEventListener("input",fromY);
+fromH();
+})();
+</script>
+</body>
+</html>
